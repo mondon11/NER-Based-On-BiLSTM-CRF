@@ -6,6 +6,28 @@ import sys
 tag2label = {"O": 0, "B-PER": 1, "I-PER": 2,"B-LOC": 3, "I-LOC": 4,"B-ORG": 5, "I-ORG": 6}
 
 # 读取训练数据和测试数据，返回[([sent_],[tag_])]
+'''
+input format：
+
+中	B-LOC
+国	I-LOC
+很	O
+大	O
+
+句	O
+子	O
+结	O
+束	O
+是	O
+空	O
+行	O
+
+output format：
+[
+    (['中','国','很','大'],['B-LOC','I-LOC','O','O']),
+    ...
+]
+'''
 def read_data(corpus_path):
     data = []
     with open(corpus_path, encoding='utf-8') as fr:
@@ -76,7 +98,27 @@ def init_embedding(vocab, embedding_dim):
     embedding_mat = np.float32(embedding_mat)
     return embedding_mat
 
-
+# 对sequences进行补全，长度小于max_len的补0
+'''
+sequences format eg.:
+[
+    [1,2,3],
+    [2,1,4,5,6,7],
+    [3,10,2,1]
+]
+seq_list format:
+[
+    [1,2,3,0,0,0],
+    [2,1,4,5,6,7],
+    [3,10,2,1,0,0]
+]
+seq_len_list:
+[
+    3,
+    6,
+    4
+]
+'''
 def pad_sequences(sequences, pad_mark=0):
     max_len = max(map(lambda x : len(x), sequences))
     seq_list, seq_len_list = [], []
@@ -89,7 +131,13 @@ def pad_sequences(sequences, pad_mark=0):
 
 
 # 将原始数据进行分批，每一批包含的数据量是batch_size，这里要将原始数据中的词换成其在word2id中的id，要把原始数据中的tag换成数字label
-# 现在数据变成[([sent_id], [label])]
+'''
+input data format eg.:
+[
+    (['中','国','很','大'],['B-LOC','I-LOC','O','O']),
+    ...
+]
+'''
 def gen_batch(data, batch_size, vocab, tag2label, shuffle=False):
     if shuffle:  # 是否混洗数据
         random.shuffle(data)
@@ -138,7 +186,7 @@ def conlleval(label_predict, label_path, metric_path):
         for sent_result in label_predict:
             for char, tag, tag_ in sent_result:
                 tag = '0' if tag == 'O' else tag
-                char = char.encode("utf-8")
+                #char = char.encode("utf-8")
                 line.append("{} {} {}\n".format(char, tag, tag_))
             line.append("\n")
         fw.writelines(line)

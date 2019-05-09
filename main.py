@@ -18,7 +18,7 @@ if __name__ == '__main__':
     args['test_data'] = 'data'  # 测试数据路径
     args['batch_size'] = 64  # 每一批用来训练的样本数
     args['epoch'] = 10  # 迭代次数
-    args['hidden_dim'] = 100  # lstm接受的数据的维度
+    args['hidden_dim'] = 100  # lstm cell输出的数据的维度
     args['optimizer'] = 'Adam'  # 优化损失函数的方法
     args['lr'] = 0.001  # 学习率
     args['clip'] = 5.0  # 限定梯度更新的时候的阈值
@@ -34,7 +34,7 @@ if __name__ == '__main__':
     embeddings = init_embedding(word2id, args['embedding_dim'])
 
     # 设置模型的输出路径
-    model_path = 'BLCM'
+    model_path = 'BLCM2'
     output_path = os.path.join('.', model_path)
     if not os.path.exists(output_path):
         os.makedirs(output_path)
@@ -42,8 +42,8 @@ if __name__ == '__main__':
     if not os.path.exists(summary_path):
         os.makedirs(summary_path)
     model_path = os.path.join(output_path, "checkpoints/")
-    if not os.path.exists(model_path):
-        os.makedirs(model_path)
+    #if not os.path.exists(model_path):
+        #os.makedirs(model_path)
     ckpt_prefix = os.path.join(model_path, "model")
     result_path = os.path.join(output_path, "results")
     if not os.path.exists(result_path):

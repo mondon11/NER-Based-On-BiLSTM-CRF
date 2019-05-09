@@ -205,7 +205,7 @@ class BLC(object):
                 print(len(label_))
                 print(tag)
             for i in range(len(sent)):
-                sent_res.append([sent[i], tag[i], tag_[i]])
+                sent_res.append([sent[i], tag[i], tag_[i]]) #sent_res format like : [['中','B-LOC','0'],['国','I-LOC','I-LOC']...]
             model_predict.append(sent_res)
         epoch_num = str(epoch+1) if epoch != None else 'test'
         # 将模型的预测写到这个文件中，每一轮迭代都要写一个
