@@ -14,8 +14,8 @@ if __name__ == '__main__':
 
     # 参数
     args = {}
-    args['train_data'] = 'data'  # 训练数据路径
-    args['test_data'] = 'data'  # 测试数据路径
+    args['train_data'] = 'data/cw'  # 训练数据路径
+    args['test_data'] = 'data/cw'  # 测试数据路径
     args['batch_size'] = 64  # 每一批用来训练的样本数
     args['epoch'] = 10  # 迭代次数
     args['hidden_dim'] = 100  # lstm cell输出的数据的维度
@@ -34,7 +34,7 @@ if __name__ == '__main__':
     embeddings = init_embedding(word2id, args['embedding_dim'])
 
     # 设置模型的输出路径
-    model_path = 'BLCM2'
+    model_path = 'BLCM3'
     output_path = os.path.join('.', model_path)
     if not os.path.exists(output_path):
         os.makedirs(output_path)
@@ -83,5 +83,9 @@ if __name__ == '__main__':
                     sent = list(sent.strip())
                     data = [(sent, ['O'] * len(sent))]
                     tag = model.test(sess, data)
-                    ENT = get_entity(tag, sent)
-                    print('ENT: {}\n'.format(ENT))
+                    #ENT = get_entity(tag, sent)
+                    PER,LOC,ORG = get_entity(tag,sent)
+                    #print('ENT: {}\n'.format(ENT))
+                    print('PER: {}\n'.format(PER))
+                    print('LOC: {}\n'.format(LOC))
+                    print('ORG: {}\n'.format(ORG))

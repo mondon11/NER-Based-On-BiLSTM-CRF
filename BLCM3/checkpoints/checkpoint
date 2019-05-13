@@ -1,0 +1,6 @@
+model_checkpoint_path: "model-1920"
+all_model_checkpoint_paths: "model-1152"
+all_model_checkpoint_paths: "model-1344"
+all_model_checkpoint_paths: "model-1536"
+all_model_checkpoint_paths: "model-1728"
+all_model_checkpoint_paths: "model-1920"
